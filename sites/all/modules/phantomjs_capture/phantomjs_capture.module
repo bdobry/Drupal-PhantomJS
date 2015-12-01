@@ -123,6 +123,7 @@ function phantomjs_capture_admin_form() {
 function phantomjs_capture_test_submit($form, $form_state) {
   // Build urls and destionation.
   $url = $form_state['values']['phantomjs_capture_test']['url'];
+  $url2 = $form_state['values']['phantomjs_capture_test']['url2'];
   $file = 'test' . $form_state['values']['phantomjs_capture_test']['format'];
   $dest = file_default_scheme() . '://' . variable_get('phantomjs_capture_dest', 'phantomjs');
 
@@ -257,12 +258,13 @@ function phantomjs_capture_screen($url, $url2, $dest, $filename, $element = NULL
 
   // Run PhantomJS to create the screen shot.
   $output = array();
-  $url = 'https://www.google.dk/search?q=' . $url . '+' . $url2;
+  $google = 'https://www.google.dk/search?q=' . $url . '+' . $url2;
+  $tripadvisor = 'http://github.com/';
     
   if ($element) {
-    exec($binary . ' ' . $script . ' ' . $url . ' ' . $dest . ' ' . escapeshellarg($element), $output);
+    exec($binary . ' ' . $script . ' ' . $google . ' ' . $dest . ' ' . escapeshellarg($element) . ' ' . $tripadvisor, $output) ;
   } else {
-    exec($binary . ' ' . $script . ' ' . $url . ' ' . $dest, $output);
+    exec($binary . ' ' . $script . ' ' . $google . ' ' . $dest . ' ' . $tripadvisor, $output);
   }
 
   // Check that PhantomJS was able to load the page.
@@ -270,28 +272,4 @@ function phantomjs_capture_screen($url, $url2, $dest, $filename, $element = NULL
     return FALSE;
   }
   return TRUE;
-}
-
-/**
-* Implements hook_block_info().
-*/
-function phantomjs_capture_block_info() {
-  $blocks = array();
-  $blocks['Scraping Block'] = array(
-    'info' => t('scraping block'),
-  );
-  return $blocks;
-}
-/**
-* Implements hook_block_view().
-*/
-function phantomjs_capture_block_view($delta = '') {
-  $block = array();
-  switch ($delta) {
-    case 'Scraping Block':
-      $block['subject'] = 'Scraper';
-      $block['content'] = phantomjs_capture_admin_form();
-      break;
-  }
-  return $block;
 }
