@@ -262,9 +262,9 @@ function phantomjs_capture_screen($url, $url2, $dest, $filename, $element = NULL
   $tripadvisor = 'http://github.com/';
     
   if ($element) {
-    exec($binary . ' ' . $script . ' ' . $google . ' ' . $dest . ' ' . escapeshellarg($element) . ' ' . $tripadvisor, $output) ;
+    exec($binary . ' ' . $script . ' ' . $google . ' ' . $tripadvisor . ' ' . $dest . ' ' . escapeshellarg($element), $output) ;
   } else {
-    exec($binary . ' ' . $script . ' ' . $google . ' ' . $dest . ' ' . $tripadvisor, $output);
+    exec($binary . ' ' . $script . ' ' . $google . ' ' . $tripadvisor . ' ' . $dest, $output);
   }
 
   // Check that PhantomJS was able to load the page.

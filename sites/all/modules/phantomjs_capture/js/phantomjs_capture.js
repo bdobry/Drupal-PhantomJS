@@ -9,9 +9,9 @@ var address, output, size, selector;
 
 // Get the input parameters.
 address = system.args[1];
-output = system.args[2];
-selector = system.args[3];
-onet = system.args[4];
+output = system.args[3];
+selector = system.args[4];
+onet = system.args[2];
 
 // Set the capture size to full HD.
 page.viewportSize = { width: 1020, height: 1080 };
